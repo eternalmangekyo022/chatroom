@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@keyframes shake {
+	0% {
+		left: 0
+	}
+
+	20% {
+		left: 2rem
+	}
+
+	40% {
+		left: -2rem
+	}
+
+	60% {
+		left: 1.5rem
+	}
+
+	80% {
+		left: -1.5rem
+	}
+
+	100% {
+		left: 0
+	}
+}
+
+.shake {
+	animation: 1s linear 1s shake
+}
