@@ -1,7 +1,11 @@
+import '../../../global.d.ts'
+
 interface IconProps {
 	src?: string
 	children?: React.ReactNode
 }
+
+
 
 function Icon({ src, children }: IconProps) {
 	const className = 'w-[70%] aspect-square rounded-full'

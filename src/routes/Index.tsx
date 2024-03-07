@@ -1,4 +1,6 @@
 //import { useState } from 'react'
+import '../../../global'
+
 
 import { Link } from 'react-router-dom'
 

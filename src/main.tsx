@@ -26,7 +26,9 @@ const router = createBrowserRouter([
 ])
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
+  <StrictMode>
     <div className='w-screen h-screen relative overflow-hidden bg-gradient-to-b from-rose-400 to-rose-800'>
      <RouterProvider router={router} />
     </div>
+  </StrictMode>,
 )

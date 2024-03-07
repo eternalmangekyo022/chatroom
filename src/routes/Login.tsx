@@ -2,6 +2,8 @@ import { useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { urls, url } from './urls.json'
+import '../../../global'
+
 
 export default function Login() {
 	const [passVisible, setPassVisible] = useState(false)
