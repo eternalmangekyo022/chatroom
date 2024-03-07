@@ -4,7 +4,30 @@ import { Navigate, useLocation, useNavigate } from 'react-router-dom'
 import io, { Socket } from 'socket.io-client'
 import { urls, url } from './urls.json'
 import Chat from '../components/Chat'
-import '../../../global.d.ts'
+
+interface IChat {
+  userId: number
+  name: string
+  lastMessage: string | null
+  messages: IMessage[]
+}
+
+interface IMessage {
+  id: number
+  type: 'message' | 'image'
+  from: number
+  to: number
+  date: Date
+  content: string
+  replyTo?: number
+}
+
+interface IUser {
+  id: number
+  name: string
+  username: string
+  password: string
+}
 
 let socket: Socket;
 

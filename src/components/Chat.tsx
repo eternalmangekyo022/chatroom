@@ -1,11 +1,24 @@
-import '../../../global.d.ts'
+interface IMessage {
+	id: number
+	type: 'message' | 'image'
+	from: number
+	to: number
+	date: Date
+	content: string
+	replyTo?: number
+}
+
+interface IChat {
+	userId: number
+	name: string
+	lastMessage: string | null
+	messages: IMessage[]
+}
 
 interface IconProps {
 	src?: string
 	children?: React.ReactNode
 }
-
-
 
 function Icon({ src, children }: IconProps) {
 	const className = 'w-[70%] aspect-square rounded-full'
