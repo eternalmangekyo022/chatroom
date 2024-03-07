@@ -4,7 +4,7 @@ import { Navigate, useLocation, useNavigate } from 'react-router-dom'
 import io, { Socket } from 'socket.io-client'
 import { urls, url } from './urls.json'
 import Chat from '../components/Chat'
-import '../../../global'
+import '../../../global.d.ts'
 
 let socket: Socket;
 

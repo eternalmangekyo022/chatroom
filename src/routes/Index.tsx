@@ -1,5 +1,5 @@
 //import { useState } from 'react'
-import '../../../global'
+import '../../../global.d.ts'
 
 
 import { Link } from 'react-router-dom'

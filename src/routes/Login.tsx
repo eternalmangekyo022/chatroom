@@ -2,7 +2,7 @@ import { useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { urls, url } from './urls.json'
-import '../../../global'
+import '../../../global.d.ts'
 
 
 export default function Login() {
