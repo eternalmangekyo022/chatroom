@@ -60,7 +60,8 @@ export default function App() {
   }
 
   const connect = (uid: number) => {
-    socket = io(`ws://${urls[url].split('http://')[1]}`, { query: { id: uid } });
+    // eslint-disable-next-line no-constant-condition
+    socket = io(urls[url], { query: { id: uid } });
     socket.on('connect', () => {
       connecting && setConnecting(false)
 
