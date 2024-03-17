@@ -20,15 +20,21 @@ interface IconProps {
 	children?: React.ReactNode
 }
 
+interface IChatProps {
+	src?: 'string'
+	onClick: (id: number) => void
+	selected: boolean
+}
+
 function Icon({ src, children }: IconProps) {
 	const className = 'w-[70%] aspect-square rounded-full'
 
 	return src ? <img src={src} className={className} />: children && <div className={className + ' bg-slate-600 flex justify-center items-center text-white'}>{children}</div>
 }
 
-export default function Chat({ lastMessage, userId, name, src, onClick }: Omit<IChat, "messages"> & { src?: 'string', onClick: (id: number) => void }) {
+export default function Chat({ lastMessage, userId, name, src, selected, onClick }: Omit<IChat, "messages"> & IChatProps) {
 
-	return <div className='w-full h-20 border-b-2 flex select-none cursor-pointer' onClick={() => onClick(userId)}>
+	return <div className={`transition-[.3s] w-full h-20 border-b-2 flex select-none ${selected ? 'bg-rose-500': 'hover:bg-rose-300	cursor-pointer'}`} onClick={() => selected ? null: onClick(userId)}>
 		<div className='w-[30%] h-full flex justify-center items-center'>
 			<Icon>{src ? src: name[0].toUpperCase()}</Icon>
 		</div>

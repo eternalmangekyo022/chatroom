@@ -20,7 +20,7 @@ export default function Login() {
 	const login = async() => {
 		try {
 			if(!username.current || !password.current) return;
-			const { data: { user } } = await axios.post<{ id: string, status: string, user: IUser }>(`${urls[url]}/login`, JSON.stringify({ username: username.current.value, password: password.current.value }), { headers: { 'Content-Type': 'application/json' } });
+			const { data: { user } } = await axios.post<{ id: string, status: string, user: { user: IUser } }>(`${urls[url]}/login`, { username: username.current.value, password: password.current.value }, { headers: { 'Content-Type': 'application/json' } })
 			navigate('/messages', { state: { user } })
 		} catch(e) {
 			console.log(e)
