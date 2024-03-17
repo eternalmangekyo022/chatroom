@@ -49,17 +49,11 @@ export default function App() {
     queryKey: ['chats'],
     enabled: !!user,
     queryFn: async() => (await axios.get<(IChat)[]>(`${urls[url]}/users/${(user as IUser).id}/chats/`, { headers: { "Content-Type": 'application/json' } })).data,
-    onSuccess: () => {
-
-    }
   })
 
   const { mutate: mutateChats } = useMutation(async(newChats: IChat[]) => {
     queryClient.setQueryData<IChat[]>('chats', newChats)
   }, {
-    onSuccess: () => {
-      console.log('success')
-    },
     onMutate: prev => {
       if(!chat) return
       setMessages(() => prev!.filter(i => i.userId === chat.userId)[0].messages)
@@ -110,7 +104,6 @@ export default function App() {
     })
 
     socket.on('disconnect', () => {
-      console.log(shouldLogout.current)
       if(shouldLogout.current) logout()
     })
   }
@@ -145,7 +138,6 @@ export default function App() {
         <div className='h-full w-[20vw] flex flex-col bg-gradient-to-b from-rose-400 to-rose-700'>
           {(chats || []).map(i => <Chat key={i.userId} selected={chat?.userId === i.userId} onClick={id => {
             setChat((chats || []).find(i => i.userId === id) || null)
-            console.log('changed chat')
           }} lastMessage={i.lastMessage} userId={i.userId} name={i.name} />)}
         </div>
         <div className='w-[10vw]'/>
