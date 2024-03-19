@@ -48,7 +48,12 @@ export default function App() {
   const { data: chats } = useQuery<IChat[]>({
     queryKey: ['chats'],
     enabled: !!user,
-    queryFn: async() => (await axios.get<(IChat)[]>(`${urls[url]}/users/${(user as IUser).id}/chats/`, { headers: { "Content-Type": 'application/json' } })).data,
+    refetchOnWindowFocus: false,
+    refetchOnMount: false,
+    queryFn: async () => (await axios.get<IChat[]>(`${urls[url]}/users/${(user as IUser).id}/chats/`, { headers: { "Content-Type": 'application/json' } })).data.map(i => ({ ...i, messages: i.messages.map(msg => ({ ...msg, date: new Date(msg.date) })) })),
+    onSuccess: (e) => {
+      console.log(e[0].messages)
+    },
   })
 
   const { mutate: mutateChats } = useMutation(async(newChats: IChat[]) => {
@@ -56,7 +61,7 @@ export default function App() {
   }, {
     onMutate: prev => {
       if(!chat) return
-      setMessages(() => prev!.filter(i => i.userId === chat.userId)[0].messages)
+      setMessages(() => prev!.filter(i => i.userId === chat.userId)[0].messages.sort((a, b) => a.date.getTime() - b.date.getTime()))
     }
   })
 /**
@@ -71,7 +76,6 @@ export default function App() {
 
   const sendMessage = () => {
     if(!input || !user || !chat) return
-    // !IMPORTANT! fix reciever not being an actual reciever
     socket.emit('usermessage', { content: input, from: user?.id, to: chat.userId })
     setInput('');
   }
@@ -97,9 +101,9 @@ export default function App() {
     socket.on('usermessage', ({ from, to, content, type: _type, date, id }: IMessage) => {
       const chats = queryClient.getQueryData<IChat[]>('chats');
       if(!chats) return;
-      const newMsg: IMessage = { from, to, content, type: _type, date, id };
+      const newMsg: IMessage = { from, to, content, type: _type, date: new Date(date), id };
       //console.log(`message recieved ${socket.id}`)
-      ///////////////////////////////////
+      //////////////////////////////////
       mutateChats(chats.map(({ userId, messages }, idx) => [from, to].includes(userId) ? { ...chats[idx], lastMessage: content, messages: [...messages, newMsg] }: chats[idx]))
     })
 
